@@ -4,8 +4,8 @@ import smtplib
 import os
 from dotenv import load_dotenv
 load_dotenv()
-my_email = os.environ["my_email"]
-password = os.environ["password"]
+my_email = os.environ["EMAIL"]
+password = os.environ["PASSWORD"]
 
 headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
