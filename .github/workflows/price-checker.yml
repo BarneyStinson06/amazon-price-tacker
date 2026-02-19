@@ -2,12 +2,16 @@ name: Run Price Tracker
 
 on:
   schedule:
-    - cron: "0 6 * * *"
+    - cron: "0 6 * * *"   # runs daily (UTC time)
   workflow_dispatch:
 
 jobs:
   run-script:
     runs-on: ubuntu-latest
+
+    env:
+      EMAIL: ${{ secrets.EMAIL }}
+      PASSWORD: ${{ secrets.PASSWORD }}
 
     steps:
       - name: Checkout repo
@@ -19,10 +23,8 @@ jobs:
           python-version: "3.11"
 
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: |
+          pip install -r requirements.txt
 
       - name: Run script
-        env:
-          email: ${{ secrets.email }}
-          password: ${{ secrets.password }}
         run: python main.py
