@@ -9,10 +9,6 @@ jobs:
   run-script:
     runs-on: ubuntu-latest
 
-    env:
-      EMAIL: ${{ secrets.EMAIL }}
-      PASSWORD: ${{ secrets.PASSWORD }}
-
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -23,8 +19,10 @@ jobs:
           python-version: "3.11"
 
       - name: Install dependencies
-        run: |
-          pip install -r requirements.txt
+        run: pip install -r requirements.txt
 
       - name: Run script
+        env:
+          EMAIL: ${{ secrets.EMAIL }}
+          PASSWORD: ${{ secrets.PASSWORD }}
         run: python main.py
