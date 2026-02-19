@@ -4,8 +4,15 @@ import smtplib
 import os
 from dotenv import load_dotenv
 load_dotenv()
-my_email = os.environ["EMAIL"]
-password = os.environ["PASSWORD"]
+
+def get_credentials():
+    email = os.environ.get("EMAIL")
+    password = os.environ.get("PASSWORD")
+
+    if email is None or password is None:
+        raise ValueError("Environment variables not found")
+
+    return email, password
 
 headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
@@ -26,5 +33,6 @@ if final_price<= 540:
      print(True)
      with smtplib.SMTP("smtp.gmail.com") as connection:
          connection.starttls()
-         connection.login(my_email, password)
-         connection.sendmail(from_addr=my_email, to_addrs=my_email,msg=f"Subject: Price Drop!!! {final_price}")
+         email, password = get_credentials()
+         connection.login(email, password)
+         connection.sendmail(from_addr=email, to_addrs=email,msg=f"Subject: Price Drop!!! {final_price}")
